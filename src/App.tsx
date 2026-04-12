@@ -21,46 +21,48 @@ function App() {
         </nav>
       </header>
 
-      <main className="hero" id="home">
-        <p className="eyebrow">Portfolio</p>
-        <h1>Hi, I&apos;m Yash Raj</h1>
-        <p className="subtitle">I build robotics and AI systems.</p>
+      <div className="next-page-content" id="home">
+        <main className="hero">
+          <p className="eyebrow">Portfolio</p>
+          <h1>Hi, I&apos;m Yash Raj</h1>
+          <p className="subtitle">I build robotics and AI systems.</p>
 
-        <div className="hero-actions">
-          <a className="primary-action" href="#projects">
-            View projects
-          </a>
-          <a className="secondary-action" href="#contact">
-            Contact me
-          </a>
-        </div>
-      </main>
+          <div className="hero-actions">
+            <a className="primary-action" href="#projects">
+              View projects
+            </a>
+            <a className="secondary-action" href="#contact">
+              Contact me
+            </a>
+          </div>
+        </main>
 
-      <section className="info-grid" aria-label="More information">
-        <article id="about" className="info-card">
-          <h2>About</h2>
-          <p>
-            I design practical software, hardware, and AI experiences with a
-            focus on clarity and impact.
-          </p>
-        </article>
+        <section className="info-grid" aria-label="More information">
+          <article id="about" className="info-card">
+            <h2>About</h2>
+            <p>
+              I design practical software, hardware, and AI experiences with a
+              focus on clarity and impact.
+            </p>
+          </article>
 
-        <article id="projects" className="info-card">
-          <h2>Projects</h2>
-          <p>
-            A small collection of robotics prototypes, AI tools, and
-            experimental builds.
-          </p>
-        </article>
+          <article id="projects" className="info-card">
+            <h2>Projects</h2>
+            <p>
+              A small collection of robotics prototypes, AI tools, and
+              experimental builds.
+            </p>
+          </article>
 
-        <article id="contact" className="info-card">
-          <h2>Contact</h2>
-          <p>
-            Reach out to collaborate, discuss ideas, or talk about the next
-            build.
-          </p>
-        </article>
-      </section>
+          <article id="contact" className="info-card">
+            <h2>Contact</h2>
+            <p>
+              Reach out to collaborate, discuss ideas, or talk about the next
+              build.
+            </p>
+          </article>
+        </section>
+      </div>
     </div>
   )
 }
