@@ -80,8 +80,8 @@ This project includes an automatic Vercel deployment workflow at:
 
 What it does:
 
-- Deploys a preview build for pull requests targeting `main`
 - Deploys a production build for pushes to `main`
+- Supports manual run from GitHub Actions (`workflow_dispatch`)
 
 ### Required GitHub Repository Secrets
 
@@ -98,3 +98,6 @@ You can get them from your Vercel project settings:
 - `VERCEL_PROJECT_ID`: Linked project ID
 
 After these are set, pushing to GitHub will trigger automatic Vercel deployment.
+
+If deployment fails, check the GitHub Actions run logs. The workflow now includes
+a pre-check step that tells you exactly which secret is missing.
