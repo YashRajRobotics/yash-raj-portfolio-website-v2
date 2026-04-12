@@ -373,10 +373,15 @@ p {
     margin-bottom: 0;
     margin-left: 0;
     width: auto;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     order: 2;
+  }
+
+  .landing-actions .primary-action,
+  .landing-actions .secondary-action {
+    width: fit-content;
   }
 
   .identity-block h1 {
@@ -412,7 +417,7 @@ p {
   }
 
   .section-divider {
-    margin-top: 1.5cm;
+    margin-top: 1cm;
   }
 
   .info-grid {
