@@ -365,6 +365,7 @@ p {
     margin-top: clamp(4.5rem, 20vw, 6.5rem);
     flex-direction: column;
     align-items: center;
+    transform: translateY(0.5cm);
   }
 
   .landing-actions {
@@ -394,7 +395,16 @@ p {
   }
 
   .college-row {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    font-size: clamp(1rem, 4.2vw, 1.25rem);
+  }
+
+  .college-row img {
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   .second-page-content {
@@ -402,7 +412,7 @@ p {
   }
 
   .section-divider {
-    margin-top: 1cm;
+    margin-top: 1.5cm;
   }
 
   .info-grid {

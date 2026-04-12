@@ -1,6 +1,5 @@
 import backgroundImage from '../img/image_background.jpg'
 import personalImage from '../img/image_personal.jpg'
-import rwthLogo from '../img/RWTH Aachen.jpg'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 import { FiMail } from 'react-icons/fi'
 
@@ -70,8 +69,7 @@ function App() {
             <div className="identity-block">
               <h1>YASH RAJ</h1>
               <div className="college-row">
-                <img src={rwthLogo} alt="RWTH Aachen logo" />
-                <span>RWTH Aachen</span>
+                <span>Data Scientist</span>
               </div>
             </div>
           </div>
