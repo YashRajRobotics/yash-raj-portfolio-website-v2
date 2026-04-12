@@ -1,15 +1,77 @@
+import { useState, useRef, useEffect } from 'react'
 import backgroundImage from '../img/image_background.jpg'
 import personalImage from '../img/image_personal.jpg'
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
-import { FiMail } from 'react-icons/fi'
+import { FiMail, FiChevronDown } from 'react-icons/fi'
+import SectionNav from './SectionNav'
+
+const SECTIONS = [
+  { id: 'home', label: 'Intro' },
+  { id: 'about', label: 'About me' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact' },
+]
 
 function App() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
+
+  const handleSectionClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+      setIsDropdownOpen(false)
+    }
+  }
+
   return (
     <div className="page-shell">
+      <SectionNav />
       <header className="topbar">
-        <a className="brand" href="#home" aria-label="Yash Raj home">
-          Yash Raj
-        </a>
+        <div className="brand-dropdown" ref={dropdownRef}>
+          <button
+            className="brand"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            aria-label="Yash Raj - expand navigation"
+            aria-expanded={isDropdownOpen}
+          >
+            Yash Raj
+            <FiChevronDown className="brand-arrow" size={16} aria-hidden="true" />
+          </button>
+          {isDropdownOpen && (
+            <div className="dropdown-menu" role="menu">
+              {SECTIONS.map((section) => (
+                <button
+                  key={section.id}
+                  className="dropdown-item"
+                  onClick={() => handleSectionClick(section.id)}
+                  role="menuitem"
+                >
+                  {section.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <nav className="nav" aria-label="Primary">
           <a
