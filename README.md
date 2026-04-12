@@ -72,32 +72,28 @@ export default defineConfig([
 ])
 ```
 
-## Vercel Auto Deploy (GitHub Actions)
+## Vercel Auto Deploy
 
-This project includes an automatic Vercel deployment workflow at:
-
-- `.github/workflows/vercel-deploy.yml`
+This project is set up for Vercel's native Git integration.
 
 What it does:
 
-- Deploys a production build for pushes to `main`
-- Supports manual run from GitHub Actions (`workflow_dispatch`)
+- Deploys automatically whenever you push to GitHub
+- Creates the public `.vercel.app` preview/production URL from your Vercel project
 
-### Required GitHub Repository Secrets
+### Setup
 
-Add these secrets in GitHub:
+1. Import this GitHub repository into Vercel.
+2. Keep the build output directory as `dist`.
+3. Leave the SPA rewrite in [vercel.json](vercel.json) so client-side routes work.
 
-- `VERCEL_TOKEN`
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
+### Environment Variables
 
-You can get them from your Vercel project settings:
+The only runtime variables found in this codebase are:
 
-- `VERCEL_TOKEN`: Vercel account token
-- `VERCEL_ORG_ID`: Team/user scope ID
-- `VERCEL_PROJECT_ID`: Linked project ID
+- `GEMINI_API_KEY`
+- `APP_URL`
 
-After these are set, pushing to GitHub will trigger automatic Vercel deployment.
+If you are not using the older blog/admin features, you can ignore those for the new minimal homepage.
 
-If deployment fails, check the GitHub Actions run logs. The workflow now includes
-a pre-check step that tells you exactly which secret is missing.
+After the repo is connected in Vercel, every push to `main` will generate or update the deployment link automatically.
