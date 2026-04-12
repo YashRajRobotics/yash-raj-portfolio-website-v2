@@ -14,7 +14,6 @@ const SECTIONS: Section[] = [
 
 function SectionNav() {
   const [currentSection, setCurrentSection] = useState('home')
-  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,15 +46,12 @@ function SectionNav() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setCurrentSection(sectionId)
-      setIsExpanded(false)
     }
   }
 
   return (
     <nav
       className="section-nav"
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
       role="navigation"
       aria-label="Section navigation"
     >
