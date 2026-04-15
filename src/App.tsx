@@ -104,13 +104,11 @@ function App() {
 
       <main className="next-page-content" id="home">
         <section className="landing-first-page" aria-label="Hero section">
-          <div className="hero-rectangle">
-            <img
-              className="hero-background-image"
-              src={backgroundImage}
-              alt="Background"
-            />
-          </div>
+          <div
+            className="hero-rectangle"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+            aria-label="Background"
+          />
 
           <div className="hero-bottom-line" aria-hidden="true">
             <div className="profile-circle">
