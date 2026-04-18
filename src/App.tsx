@@ -21,6 +21,13 @@ type AboutCard = {
   descriptionSuffix?: string
 }
 
+type WorkExperienceItem = {
+  role: string
+  duration: string
+  company: string
+  description: string
+}
+
 const ABOUT_CARDS: AboutCard[] = [
   {
     id: 'about-card',
@@ -29,13 +36,11 @@ const ABOUT_CARDS: AboutCard[] = [
       'I am an AI Engineer specializing in Computer Vision and NLP, building end-to-end intelligent systems from research to production.',
   },
   {
-    id: 'projects',
     title: 'Work Impact',
     description:
-      'I have worked for 3+ years as a Data Scientist delivering ~$30M impact through ML systems improving revenue and customer experience.',
+      'I have worked for 3+ years as a Data Scientist delivering ~$30M impact by improving revenue and customer experience.',
   },
   {
-    id: 'contact',
     title: 'Technical Depth',
     description:
       'I have expertise in domains like Computer Vision, NLP and Time Series, deploying end-to-end ML pipelines in production.',
@@ -43,7 +48,7 @@ const ABOUT_CARDS: AboutCard[] = [
   {
     title: 'Origin Story',
     description:
-      'I started an NGO named BLISS, providing free eye checkups to 20,000+ underprivileged students (till date). This inspired me to build accessible Computer Vision solutions for children across the world, where over 1.4 million children suffer from partial or complete blindness, and hundreds of millions still lack access to basic eye care and early diagnosis.',
+      'I started an NGO, providing free eye checkups to 20,000+ underprivileged students (till date). This inspired me to build accessible Computer Vision solutions for children across the world, where over 1.4 million children suffer from partial or complete blindness, and many still lack access to basic eye care.',
   },
   {
     title: 'Beyond Academics',
@@ -54,16 +59,49 @@ const ABOUT_CARDS: AboutCard[] = [
     title: 'Hobbies',
     description:
       'In my free time, I express my creativity through drawing, bringing my imagination to life on the canvas. Feel free to explore my art on ',
-    linkText: 'Instagram (@ nth_dimension_artist)',
+    linkText: 'Instagram (nth_dimension_artist)',
     linkHref: 'https://www.instagram.com/nth_dimension_artist/',
     descriptionSuffix: '.',
+  },
+]
+
+const WORK_EXPERIENCE_ITEMS: WorkExperienceItem[] = [
+  {
+    role: 'DATA SCIENTIST',
+    duration: '2021 Nov - 2024 Aug',
+    company: 'Applied Data Finance',
+    description:
+      'Built SARIMAX models to predict monthly loan default and revenue, improving monthly loss forecasting by about 12%. Developed BERT and LDA models to analyse call transcripts, reducing resolution time and customer complaints by ~22%. Engineered customer-behaviour features and deployed predictive calling-time model increasing CSR efficiency by 15%.',
+  },
+  {
+    role: 'INTERN DATA SCIENTIST',
+    duration: '2020 May - 2020 Aug',
+    company: 'Tata Consultancy Services',
+    description:
+      'Led the development and deployment of an OCR system to extract handwritten text from low-quality medical bills, achieving ~97% field-level accuracy.',
+  },
+  {
+    role: 'INTERN DATA SCIENTIST',
+    duration: '2019 May - 2019 July',
+    company: 'Wingfotech',
+    description:
+      'Deployed an end-to-end ML pipeline for loan defaulter prediction model.',
   },
 ]
 
 function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isAboutExpanded, setIsAboutExpanded] = useState(false)
+  const [isAboutEyebrowPinned, setIsAboutEyebrowPinned] = useState(false)
+  const [isWorkEyebrowPinned, setIsWorkEyebrowPinned] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const topbarRef = useRef<HTMLElement>(null)
+  const aboutSectionRef = useRef<HTMLElement>(null)
+  const aboutEyebrowRef = useRef<HTMLParagraphElement>(null)
+  const aboutCardsRef = useRef<HTMLElement>(null)
+  const workSectionRef = useRef<HTMLElement>(null)
+  const workEyebrowRef = useRef<HTMLParagraphElement>(null)
+  const workTimelineRef = useRef<HTMLOListElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -84,6 +122,76 @@ function App() {
     }
   }, [isDropdownOpen])
 
+  useEffect(() => {
+    const updateWorkEyebrowPinnedState = () => {
+      if (window.innerWidth > 720) {
+        setIsAboutEyebrowPinned(false)
+        setIsWorkEyebrowPinned(false)
+        document.documentElement.style.removeProperty('--work-sticky-top-mobile')
+        document.documentElement.style.removeProperty('--about-sticky-top-mobile')
+        return
+      }
+
+      const topbarRect = topbarRef.current?.getBoundingClientRect()
+      const aboutSectionRect = aboutSectionRef.current?.getBoundingClientRect()
+      const aboutEyebrowRect = aboutEyebrowRef.current?.getBoundingClientRect()
+      const aboutCardsRect = aboutCardsRef.current?.getBoundingClientRect()
+      const workSectionRect = workSectionRef.current?.getBoundingClientRect()
+      const workTimelineRect = workTimelineRef.current?.getBoundingClientRect()
+      const eyebrowRect = workEyebrowRef.current?.getBoundingClientRect()
+
+      if (!topbarRect) {
+        setIsAboutEyebrowPinned(false)
+        setIsWorkEyebrowPinned(false)
+        return
+      }
+
+      const topbarBottom = topbarRect.bottom
+      const stickyTop = Math.max(0, topbarBottom)
+
+      if (aboutSectionRect && aboutEyebrowRect && aboutCardsRect) {
+        document.documentElement.style.setProperty(
+          '--about-sticky-top-mobile',
+          `${stickyTop}px`
+        )
+        const aboutHasReachedTopbar =
+          aboutEyebrowRect.top <= topbarBottom + 0.1
+        const aboutStillActive =
+          aboutCardsRect.bottom > topbarBottom + aboutEyebrowRect.height
+
+        setIsAboutEyebrowPinned(aboutHasReachedTopbar && aboutStillActive)
+      } else {
+        setIsAboutEyebrowPinned(false)
+      }
+
+      if (!workSectionRect || !workTimelineRect || !eyebrowRect) {
+        setIsWorkEyebrowPinned(false)
+        return
+      }
+
+      document.documentElement.style.setProperty(
+        '--work-sticky-top-mobile',
+        `${stickyTop}px`
+      )
+      const sectionHasReachedTopbar = workSectionRect.top <= topbarBottom + 0.5
+      const sectionStillActive =
+        workTimelineRect.bottom > topbarBottom + eyebrowRect.height
+
+      setIsWorkEyebrowPinned(sectionHasReachedTopbar && sectionStillActive)
+    }
+
+    window.addEventListener('scroll', updateWorkEyebrowPinnedState, {
+      passive: true,
+    })
+    window.addEventListener('resize', updateWorkEyebrowPinnedState)
+    updateWorkEyebrowPinnedState()
+
+    return () => {
+      window.removeEventListener('scroll', updateWorkEyebrowPinnedState)
+      window.removeEventListener('resize', updateWorkEyebrowPinnedState)
+    }
+  }, [])
+
   const handleSectionClick = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -95,7 +203,7 @@ function App() {
   return (
     <div className="page-shell">
       <SectionNav />
-      <header className="topbar">
+      <header className="topbar" ref={topbarRef}>
         <div className="brand-dropdown" ref={dropdownRef}>
           <button
             className="brand"
@@ -190,11 +298,20 @@ function App() {
           id="about"
           className="second-page-content"
           aria-label="More information"
+          ref={aboutSectionRef}
         >
+          <p
+            ref={aboutEyebrowRef}
+            className={`eyebrow ${
+              isAboutEyebrowPinned ? 'is-pinned' : 'is-released'
+            }`}
+          >
+            My Professional Summary
+          </p>
+
           <main className="hero">
-            <p className="eyebrow">My Professional Summary</p>
             <h2>Hi, I&apos;m Yash</h2>
-            <p className="subtitle">I'm a Data Scientist building AI solutions to solve real-world problems.</p>
+            <p className="subtitle">I'm a Data Scientist, building AI solutions to solve real-world problems.</p>
 
             <div className="hero-actions">
               <a className="primary-action" href="https://www.linkedin.com/in/yash-raj-rwth/" target="_blank" rel="noopener noreferrer">
@@ -206,7 +323,7 @@ function App() {
             </div>
           </main>
 
-          <section className="info-grid" aria-label="Cards">
+          <section className="info-grid" aria-label="Cards" ref={aboutCardsRef}>
             {ABOUT_CARDS.slice(0, isAboutExpanded ? ABOUT_CARDS.length : 3).map(
               (card) => (
                 <article
@@ -245,6 +362,54 @@ function App() {
           </div>
 
           <div className="about-section-end-line" aria-hidden="true" />
+        </section>
+
+        <section
+          id="projects"
+          className="work-experience-content"
+          aria-label="Work experience"
+          ref={workSectionRef}
+        >
+          <p
+            ref={workEyebrowRef}
+            className={`work-eyebrow ${
+              isWorkEyebrowPinned ? 'is-pinned' : 'is-released'
+            }`}
+          >
+            My Professional Journey
+          </p>
+          <h2 className="work-heading">
+            WORK
+            <br />
+            EXPERIENCE
+          </h2>
+
+          <ol
+            className="work-timeline"
+            aria-label="Work timeline"
+            ref={workTimelineRef}
+          >
+            {WORK_EXPERIENCE_ITEMS.map((item) => (
+              <li key={`${item.role}-${item.duration}`} className="timeline-item">
+                <button
+                  type="button"
+                  className="timeline-marker"
+                  aria-label={`${item.role} at ${item.company}`}
+                >
+                  <span className="timeline-marker-dot" aria-hidden="true" />
+                </button>
+
+                <article className="timeline-card">
+                  <div className="timeline-card-header">
+                    <h3>{item.role}</h3>
+                    <p className="timeline-duration">{item.duration}</p>
+                  </div>
+                  <p className="timeline-company">{item.company}</p>
+                  <p className="timeline-description">{item.description}</p>
+                </article>
+              </li>
+            ))}
+          </ol>
         </section>
       </main>
     </div>
