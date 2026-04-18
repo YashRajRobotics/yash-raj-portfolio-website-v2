@@ -28,6 +28,13 @@ html {
   scroll-behavior: smooth;
 }
 
+#home,
+#about,
+#projects,
+#contact {
+  scroll-margin-top: 2.0cm;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -360,11 +367,40 @@ p {
   margin-top: 2rem;
 }
 
+.info-grid-header {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.know-more-button {
+  border: 1px solid #111827;
+  background: transparent;
+  color: #111827;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.know-more-button:hover,
+.know-more-button:focus-visible {
+  background: #111827;
+  color: #ffffff;
+  transform: translateY(-1px);
+  outline: none;
+}
+
 .info-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 3.5rem;
+  margin-top: 2.25rem;
 }
 
 .info-card {
@@ -383,9 +419,57 @@ p {
 
 .info-card p {
   color: #4b5563;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.inline-card-link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.inline-card-link:hover,
+.inline-card-link:focus-visible {
+  color: #000000;
+}
+
+.about-section-end-line {
+  margin-top: 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.32);
 }
 
 @media (min-width: 721px) {
+  .hero {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2rem;
+    align-items: start;
+  }
+
+  .hero .eyebrow,
+  .hero h2,
+  .hero .subtitle {
+    grid-column: 1;
+  }
+
+  .hero .subtitle {
+    max-width: none;
+    white-space: nowrap;
+  }
+
+  .hero-actions {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    justify-self: end;
+    align-self: start;
+    margin-top: 0;
+    flex-wrap: nowrap;
+  }
+
   .info-card h3 {
     font-size: 1.1rem;
   }
@@ -444,6 +528,25 @@ p {
 .landing-actions .secondary-action:hover,
 .landing-actions .primary-action:focus-visible,
 .landing-actions .secondary-action:focus-visible {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.hero-actions .primary-action,
+.hero-actions .secondary-action {
+  border: 1px solid #111827;
+  background: transparent;
+  color: #111827;
+  font-weight: 700;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-actions .primary-action:hover,
+.hero-actions .secondary-action:hover,
+.hero-actions .primary-action:focus-visible,
+.hero-actions .secondary-action:focus-visible {
   background: #111827;
   color: #ffffff;
   border-color: #111827;
@@ -562,6 +665,11 @@ p {
     margin-top: 2rem;
   }
 
+  .info-grid-header {
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+
   .section-nav {
     display: none;
   }
@@ -576,15 +684,35 @@ p {
   z-index: 15;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .section-nav-list {
   list-style: none;
-  padding: 0;
+  padding: 0.45rem 0.1rem 0.45rem 0.2rem;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: fit-content;
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  transition:
+    padding 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.section-nav:hover .section-nav-list {
+  padding: 0.6rem 0.3rem 0.6rem 0.6rem;
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(17, 24, 39, 0.16);
+  box-shadow: 0 12px 34px rgba(15, 23, 42, 0.1);
+  border-radius: 0.8rem;
 }
 
 .section-nav-item {
@@ -596,7 +724,8 @@ p {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.28rem 0.2rem;
+  border-radius: 0.6rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -615,6 +744,7 @@ p {
   border-radius: 1px;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  margin-left: 0.25cm;
 }
 
 .section-nav-line.active::before {
@@ -635,6 +765,18 @@ p {
   opacity: 1;
   width: auto;
   margin-left: 0.5rem;
+}
+
+.section-nav-line.active .section-label {
+  font-weight: 700;
+}
+
+.section-nav:hover .section-nav-line.active {
+  background: #ffffff;
+}
+
+.section-nav-line.active {
+  background: rgba(255, 255, 255, 0.86);
 }
 
 .section-nav-line:hover,
